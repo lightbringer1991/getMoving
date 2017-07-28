@@ -36,13 +36,13 @@ def MyBallarat(request):
     tile_list = Tile.objects
     print(tile_list)
 
-    # tile_categories = Category.objects.order_by('name')
-    # tile_data_list = Tile_Data.objects.order_by('name')
-    # template = loader.get_template('bigData/MyBallarat.html')
-    # context = RequestContext(request, {'tile_list': tile_list, 'tile_data_list': tile_data_list,
-    #                                    'tile_categories': tile_categories})
-    return HttpResponse("test")
-    # return HttpResponse(template.render(context))
+    tile_categories = Category.objects.order_by('name')
+    tile_data_list = Tile_Data.objects.order_by('name')
+    template = loader.get_template('bigData/MyBallarat.html')
+    context = RequestContext(request, {'tile_list': tile_list, 'tile_data_list': tile_data_list,
+                                        'tile_categories': tile_categories})
+    # return HttpResponse("test")
+    return HttpResponse(template.render(context))
 
 
 def TileTab(request):
