@@ -1,0 +1,39 @@
+{% extends "basetile.html" %}
+<div class="main">
+<style type="text/css">
+        /* show the move cursor as the user moves the mouse over the panel header.*/
+        .panel-body {
+          color:green;
+          background-color: green;
+        }
+</style>
+</div>
+<div class="public_holidays_heading">
+{% block category%}{{ tile.title }} {% endblock category%}
+</div>
+<div class="public_holidays_body">
+
+
+{% block content %}
+<font color="black">Next Public Holiday</font> 
+
+{% for tile_data in tile_data_list %}
+  {% if tile_data.name = "Public Holidays" %}
+   	 		
+  	  		<font color="red"><h3>{{ tile_data.data.20.Date }}</h3></font>
+  	  	    {% if tile_data.data.20.Applicable_To = "NAT" %}
+        		<h5><font color="black">STATE: National Holiday</font></h5>
+  	    	{% else %}
+  				<h5><font color="black">STATE: {{ tile_data.data.20.Applicable_To }}</font></h5>
+  			{% endif %}
+			<font color="black"><p>{{ tile_data.data.20.Information }}</p></font>
+    
+    	
+    	
+  {% endif %}
+{% endfor %}
+
+
+{% endblock content %}
+
+</div>

@@ -1,0 +1,80 @@
+{% extends "basetile.html" %}
+
+{% block category%}
+
+{{ tile.title }}
+  
+{% endblock category%}
+
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     #mapAF {
+        width: 315px;
+        height: 200px;
+     }
+    </style>
+    <script>
+      var mapAF;
+
+      function initializeAF() {
+        mapAF = new google.maps.Map(document.getElementById('mapAF'), {
+          zoom: 11,
+          center: new google.maps.LatLng(-37.5555,143.851709),
+          mapTypeId: 'terrain'
+        });
+
+        var script = document.createElement('script');
+        script.src = '/aquaticFacilities/';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.affeed_callback = function(results) {
+
+
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
+          
+          
+
+          var contentStringAF = results.features[i].properties.facility;
+            
+            
+
+          var infowindow = new google.maps.InfoWindow({
+            maxWidth: 140,
+            maxHeight: 50
+          });
+          
+
+          var markerAF = new google.maps.Marker({
+            position: latLng,
+            map: mapAF,
+            info: contentStringAF,
+            title: results.features[i].properties.facility
+          });
+
+                 
+          markerAF.addListener('click', function() {
+            infowindow.setContent(this.info);
+            infowindow.open(mapAF, this);
+          });
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mapAF"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=initializeAF">
+    </script>
+  </body>
+</html>
+{% endblock content %}

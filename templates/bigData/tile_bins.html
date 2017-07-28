@@ -1,0 +1,79 @@
+{% extends "basetile.html" %}
+
+{% block category %}Bin Days{% endblock category %}
+{% block content %}
+<div class="col-xs-12" id="WasteInfo">
+  <form>
+    <p class="ballarat_gbar"><span>Enter your address below to find when your bins will be picked up next</p>
+    <div class="col-xs-10"><input type="text" id="SearchWaste" class="form-control" placeholder="eg:25 Armstrong Street " value=""/></div>
+    <div class="col-xs-2"><button type="button" class="btn btn-primary" style="width:100%;" id="WasteSearch"><span class="glyphicon glyphicon-search"></span></button></div>
+  </form>
+  <div class="col-xs-12" id="WasteMessage"></div>
+</div>
+
+
+<script>
+function addDays(today, dateObj, numDays) {
+   while (today>dateObj){
+     console.log("datobj" + dateObj)
+     dateObj.setDate(dateObj.getDate() + numDays);
+     console.log("newdate" + dateObj)
+   }
+    return dateObj;
+}
+function DoWasteSearch(){
+var data = "ts=" + Date.now() + "&sql=SELECT%20*%20from%20\"23be1fc4-b6ef-4013-9102-c014c9d48711\"%20where%20address%20LIKE%20%27%25" + $("#SearchWaste").val().replace(/(^|\s)[a-z]/g,function(f){return f.toUpperCase();}) + "%25%27 limit 5";
+  $.ajax({
+    url: 'https://data.gov.au/api/action/datastore_search_sql',
+    data: data,
+    dataType: 'jsonp',
+    success: function(data) {
+    var res="";
+    var count=0;
+    var totaladdress = data.result.records.length
+    if (totaladdress>1){
+      res=res+"<div class=\"col-xs-12 col-sm-12\"><p>Please make your search more specific. Too many results returned</p></div>";
+      $("#WasteMessage").html(res);
+    }
+    else if(data.success==true){
+        data.result.records.forEach(function(item){
+        var txtWaste = "";
+        var txtRecyc = "";
+        var fromW = item.nextwaste.split("-");
+        var nxtWasteDate = new Date(Date.UTC(fromW[2], (fromW[1]-1) , fromW[0],1,0,0));
+        var fromR = item.nextrecycle.split("-");
+        var nxtRecyDate = new Date(Date.UTC(fromR[2], (fromR[1]-1) , fromR[0],1,0,0));
+        var today = new Date();
+
+        if(nxtWasteDate>=today){txtWaste=nxtWasteDate;}else{txtWaste=addDays(today, nxtWasteDate, 7);}
+        console.log("date " + today + "nxtWasteDate" + nxtWasteDate + "txtWaste" + txtWaste);
+        if(nxtRecyDate>=today){txtRecyc=nxtRecyDate;}else{txtRecyc =addDays(today, nxtRecyDate , 14);}
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        res=res+"<div class=\"col-xs-12 col-sm-12\"><p>For your address " + item.address + "</p><p>Your next <strong>waste</strong> pickup will be " + txtWaste.toDateString() + "</p><p>Your next <strong>recycling</strong> pickup will be " + txtRecyc.toDateString() + "</p></div>"
+        //res=res+"<div class=\"col-xs-12 col-sm-6\">Address</div><div class=\"col-xs-4 col-sm-2\"></div><div class=\"col-xs-4 col-sm-2\">Next Waste</div><div class=\"col-xs-4 col-sm-2\">Next Recycling</div>";
+        //res=res+"<div class=\"col-xs-12 col-sm-6\">" + item.address + "</div><div class=\"col-xs-4 col-sm-2\">" + "</div><div class=\"col-xs-4 col-sm-2\">" +item.nextwaste+ "</div><div class=\"col-xs-4 col-sm-2\">" + item.nextrecycle  + "</div>";
+        count++;
+      });
+      if(count==0){
+        res=res+"<div class=\"col-xs-12 col-sm-12\">No Results Found</div>";
+        $("#WasteMessage").html(res);
+      }
+      else{
+        $("#WasteInfo").html(res);
+      };
+    }
+  }
+  });
+}
+$( "#SearchWaste" ).keypress(function(event) {
+ if ( event.which == 13 ) {
+     event.preventDefault();
+     DoWasteSearch();
+  }
+});
+
+$( "#WasteSearch").click(function() {
+  DoWasteSearch();
+});
+</script>
+{% endblock content %}

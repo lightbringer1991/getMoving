@@ -1,0 +1,77 @@
+{% extends "basetile.html" %}
+
+{% block category%}
+
+{{ tile.title }}
+  
+{% endblock category%}
+
+
+
+{% block content %}
+
+    <style>
+     #mapcctv {
+        width: 315px;
+        height: 200px;
+     }
+    </style>
+    <script>
+      var mapcctv;
+
+      function initializecctv() {
+        mapcctv = new google.maps.Map(document.getElementById('mapcctv'), {
+          zoom: 15,
+          center: new google.maps.LatLng(-37.5605,143.859909),
+          mapTypeId: 'terrain'
+        });
+
+        var script = document.createElement('script');
+        script.src = '/cctvCameras/';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.cctvfeed_callback = function(results) {
+
+
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
+          
+          
+
+          var contentString = results.features[i].properties.site+"<br>"+
+                              "<b>"+'Id: '+results.features[i].properties.name+"</b>";
+            
+            
+
+          var infowindow = new google.maps.InfoWindow({
+            maxWidth: 140,
+            maxHeight: 50
+          });
+          
+
+          var markercctv = new google.maps.Marker({
+            position: latLng,
+            map: mapcctv,
+            info: contentString,
+            title: results.features[i].properties.site
+          });
+
+                 
+          markercctv.addListener('click', function() {
+            infowindow.setContent(this.info);
+            infowindow.open(mapcctv, this);
+          });
+        }
+      }
+    </script>
+   
+    <div id="mapcctv"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=initializecctv">
+    </script>
+
+{% endblock content %}

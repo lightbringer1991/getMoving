@@ -1,0 +1,87 @@
+{% extends "basetile.html" %}
+
+{% block category%}
+
+{{ tile.title }}
+  
+{% endblock category%}
+
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     #mapcc {
+        min-width: 315px;
+        width: inherit;
+        min-height: 200px;
+        height: inherit;
+     }
+    </style>
+    <script>
+      var mapcc;
+
+      function initializecc() {
+        mapcc = new google.maps.Map(document.getElementById('mapcc'), {
+          zoom: 11,
+          center: new google.maps.LatLng(-37.5555,143.851709),
+          mapTypeId: 'terrain'
+        });
+
+        var script = document.createElement('script');
+        script.src = '/childcareCenters/';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.ccfeed_callback = function(results) {
+
+
+        for (var i = 0; i < results.length; i++) {
+          var coords = results[i].json_geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
+          
+          
+
+          var contentString = "<b>"+results[i].name+"</b>"+"<br>"+results[i].address+"<br>"+
+                              "<b>"+'Contact: '+"</b>"+results[i].contact_ph1+"<br>"+
+                              results[i].email+"<br>"+"<a href="+results[i].url+" target='_blank'>"+
+                              'more'+"</a>";
+                              
+            
+            
+
+          var infowindow = new google.maps.InfoWindow({
+            maxWidth: 180,
+            maxHeight: 45
+          });
+          
+
+          var markercc = new google.maps.Marker({
+            position: latLng,
+            map: mapcc,
+            info: contentString,
+            title: results[i].name
+          });
+
+                 
+          markercc.addListener('click', function() {
+            infowindow.setContent(this.info);
+            infowindow.open(mapcc, this);
+          });
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mapcc"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=initializecc">
+
+    </script>
+  </body>
+</html>
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% extends "basetile.html" %}
+
+{% block category %}{{ tile.title }}{% endblock category %}
+{% block content %}
+<h1>
+  {{tile.get_temp}}
+</h1>
+{{tile.get_weather}}
+{% endblock content %}

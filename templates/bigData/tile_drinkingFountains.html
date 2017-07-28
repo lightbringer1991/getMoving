@@ -1,0 +1,82 @@
+{% extends "basetile.html" %}
+
+{% block category%}
+
+{{ tile.title }}
+  
+{% endblock category%}
+
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     #mapd {
+        width: 315px;
+        height: 200px;
+     }
+    </style>
+    <script>
+      var mapd;
+
+      function initializedf() {
+        mapd = new google.maps.Map(document.getElementById('mapd'), {
+          zoom: 12,
+          center: new google.maps.LatLng(-37.5515,143.851709),
+          mapTypeId: 'terrain'
+        });
+
+        var script = document.createElement('script');
+        script.src = '/drinkingFountains/';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.dffeed_callback = function(results) {
+
+
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
+          
+          
+
+          var contentString = results.features[i].properties.Site_Name+
+                              "<br><b>"+'Type: '+results.features[i].properties.Type+
+                              "</b>";
+            
+            
+
+          var infowindow = new google.maps.InfoWindow({
+            maxWidth: 140,
+            maxHeight: 50
+          });
+          
+
+          var markerd = new google.maps.Marker({
+            position: latLng,
+            map: mapd,
+            info: contentString,
+            title: results.features[i].properties.Area
+          });
+
+                 
+          markerd.addListener('click', function() {
+            infowindow.setContent(this.info);
+            infowindow.open(mapd, this);
+          });
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mapd"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=initializedf">
+    </script>
+  </body>
+</html>
+{% endblock content %}

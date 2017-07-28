@@ -1,0 +1,33 @@
+
+
+{% block category%}
+
+{{ tile.title }}
+  
+{% endblock category%}
+
+
+
+{% block content %}
+
+    
+    <script>
+      var mapAAA;
+
+      function A() {
+        mapAAA = new google.maps.Map(document.getElementById('mapAAA'), {
+          zoom: 11,
+          center: new google.maps.LatLng(-37.5555,143.851709),
+          mapTypeId: 'terrain'
+        });
+
+      }
+  
+    </script>
+  
+    <div id="mapAAA"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=A">
+    </script>
+  
+{% endblock content %}

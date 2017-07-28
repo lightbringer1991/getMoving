@@ -1,0 +1,275 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+}
+
+*{
+  box-sizing:border-box;
+}
+
+.acc-menu input[type="checkbox"] ~ ul li,
+.acc-menu input[type="checkbox"].current:checked ~ ul li{
+  height:0;
+  overflow:hidden;
+  transition:.2s ease-in;
+}
+.acc-menu input[type="checkbox"]:checked ~ ul li,
+.acc-menu input[type="checkbox"].current ~ ul li{
+  height:auto;
+}
+.acc-menu input[type="checkbox"]{
+  display:none;
+}
+.acc-menu label{
+  margin:0;
+  padding:0;
+  float:left;
+  width:3em;
+  height:2em;
+  text-align:center;
+  background:red;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+
+}
+.acc-menu  label:hover{
+  background-color:white;
+  color: red;
+}
+.acc-menu  label:before,
+/*This flip-reverses the label */
+.acc-menu input[type="checkbox"]:checked.current  ~ label:before{
+  content:"+";
+}
+.acc-menu input[type="checkbox"]:checked ~ label:before,
+.acc-menu input[type="checkbox"].current  ~ label:before{
+  content:"-";
+}
+/*.MainMenu{
+  width:50em;
+  background-color: orange;
+}*/
+
+/*TileTab-Environment*/
+.TileTab-Environment{
+  background-color: #75a9f9;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  color:black !important;
+}
+a.TileTab-Environment:hover{
+  background-color: #466595 ;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  font-weight: bold !important;
+}
+a.TileTab-Environment:hover,
+button.TileTab-Environment:hover,
+a.TileTab-Environment:focus,
+button.TileTab-Environment:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #75a9f9;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.TileTab-Environment-sub{
+  background-color: #466595;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  color:white !important;
+}
+a.TileTab-Environment-sub:hover{
+  background-color: #5176ae !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-Environment-sub:hover,
+button.TileTab-Environment-sub:hover,
+a.TileTab-Environment-sub:focus,
+button.TileTab-Environment-sub:focus {
+  color: black;
+  text-decoration: none;
+  background-color: #466595;
+  border-radius: 0px 0px 0px 0px;
+}
+/*TileTab-Entertainment*/
+.TileTab-Entertainment{
+  background-color: #f06e9c;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  color:black !important;
+}
+a.TileTab-Entertainment:hover{
+  background-color: #f06e9c;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  font-weight: bold !important;
+}
+a.TileTab-Entertainment:hover,
+button.TileTab-Entertainment:hover,
+a.TileTab-Entertainment:focus,
+button.TileTab-Entertainment:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #f06e9c;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.TileTab-Entertainment-sub{
+  background-color: #90425d;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-Entertainment-sub:hover{
+  background-color: #a84d6d !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-Entertainment-sub:hover,
+button.TileTab-Entertainment-sub:hover,
+a.TileTab-Entertainment-sub:focus,
+button.TileTab-Entertainment-sub:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #f06e9c;
+  border-radius: 0px 0px 0px 0px;
+}
+/*TileTab-Education*/
+.TileTab-Education{
+  background-color: #fef67f;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  color:black !important;
+}
+a.TileTab-Education:hover{
+  background-color: #fef67f;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  font-weight: bold !important;
+}
+a.TileTab-Education:hover,
+button.TileTab-Education:hover,
+a.TileTab-Education:focus,
+button.TileTab-Education:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #fef67f;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.TileTab-Education-sub{
+  background-color: #b1a823 !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-Education-sub:hover{
+  background-color: #cac028 !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-Education-sub:hover,
+button.TileTab-Education-sub:hover,
+a.TileTab-Education-sub:focus,
+button.TileTab-Education-sub:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #fdf133;
+  border-radius: 0px 0px 0px 0px;
+}
+
+/*TileTab-HealthSafety*/
+.TileTab-HealthSafety{
+  background-color: #92d36e;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  color:black !important;
+
+}
+a.TileTab-HealthSafety:hover{
+  background-color: #92d36e;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  font-weight: bold !important;
+}
+a.TileTab-HealthSafety:hover,
+button.TileTab-HealthSafety:hover,
+a.TileTab-HealthSafety:focus,
+button.TileTab-HealthSafety:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #92d36e;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.TileTab-HealthSafety-sub{
+  background-color: #008900 !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-HealthSafety-sub:hover{
+  background-color: #00a000 !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-HealthSafety-sub:hover,
+button.TileTab-HealthSafety-sub:hover,
+a.TileTab-HealthSafety-sub:focus,
+button.TileTab-HealthSafety-sub:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #00e500;
+  border-radius: 0px 0px 0px 0px;
+}
+
+/*TileTab-TravelTransport*/
+.TileTab-TravelTransport{
+  background-color: #f1801c;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  color:black !important;
+}
+a.TileTab-TravelTransport:hover{
+  background-color: #f1801c;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+  font-weight: bold !important;
+}
+a.TileTab-TravelTransport:hover,
+button.TileTab-TravelTransport:hover,
+a.TileTab-TravelTransport:focus,
+button.TileTab-TravelTransport:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #f1801c;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.TileTab-TravelTransport-sub{
+  background-color: #c05b02 !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-TravelTransport-sub:hover{
+  background-color: #f07203 !important;
+  display:block;
+  border-radius: 0px 0px 0px 0px;
+}
+a.TileTab-TravelTransport-sub:hover,
+button.TileTab-TravelTransport-sub:hover,
+a.TileTab-TravelTransport-sub:focus,
+button.TileTab-TravelTransport-sub:focus {
+  color: white;
+  text-decoration: none;
+  background-color: #fdf133;
+  border-radius: 0px 0px 0px 0px;
+}
+
+
+
+
+
+
+/*--------Work of Mayur Sehgal-----------*/

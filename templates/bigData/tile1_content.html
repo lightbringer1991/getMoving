@@ -1,0 +1,18 @@
+{% extends "basetile.html" %}
+
+{% block category%}{{ tile.title }}{% endblock category%}
+{% block content %}
+{% for tile_data in tile_data_list %}
+  {% if tile_data.name = "Weather Report" %}
+
+  	<h3>{{ tile_data.data.observations.data.0.name }}</h3>
+	<h1>{{ tile_data.data.observations.data.0.air_temp }} °C </h1> 
+	<h2>{{ tile_data.data.observations.data.0.cloud }}</h2>
+    
+
+    
+
+    
+  {% endif %}
+{% endfor %}
+{% endblock content %}

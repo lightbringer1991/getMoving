@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<link href="{% static 'dash/css/TileTab.css' %}" rel="stylesheet">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-11">
+      <div class="MainMenu">
+        <div class="list-group">
+          <a href="#self" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">+</a>
+          <div class="collapse" id="self">
+          {% for category in tile_categories %}
+          <a href="#{{category.name}}" class="list-group-item TileTab-{{category.name}}" data-toggle="collapse" data-parent="#{{category.name}}">{{category.name}}<i class="fa fa-caret-down"></i></a>
+          <div class="collapse list-group-submenu" id="{{category.name}}">
+            {% for tile in tile_list %}
+              {% if tile.category_id == category.id %}
+                <a class="list-group-item TileTab-{{category.name}}-sub" data-parent="#{{category.name}}" onclick="return addTile({{tile.id}})" data-internalid="{{tile.id}}">{{tile.title}}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

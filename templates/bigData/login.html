@@ -1,0 +1,34 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Development Server Demo</title>
+<link rel="stylesheet" type="text/css" href="{% static 'dash/serverDemoStyle.css' %}" />
+
+<body>
+
+<div id="header_bar"></div>
+<div id="page_title"><h1>Online Development Server Demo</h1></div>
+
+<div id="top_row">
+
+	<h2>Register</h2>	
+
+</head>
+{% block content %}
+	{% if form.errors %}
+		<p class="error"> sorry, thats not a valid user</p>
+	{% endif %}
+	
+	<form action="/auth/" method="post">{% csrf_token %}
+		<label for="username"> username</label>
+		<input type="text" name="username" value="" id="username">
+		<label for="password"> password</label>
+		<input type="text" name="password" value="" id="password">
+		<input type="submit" value="login"/>
+	</form>
+{% endblock %}
+</body>
+</html>

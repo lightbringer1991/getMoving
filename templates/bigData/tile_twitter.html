@@ -1,0 +1,26 @@
+{% extends "basetile.html" %}
+<div class="main">
+<style type="text/css">
+        /* show the move cursor as the user moves the mouse over the panel header.*/
+        .panel-body {
+          color:green;
+          background-color: green;
+        }
+        .panel-body-Default{
+          padding-left: 15px !important;
+          padding-top: 0 !important;
+          height:200px;
+
+        }
+</style>
+</div>
+<div class="Tile5_heading">
+{% block category%}{{ tile.title }} {% endblock category%}
+</div>
+<div class="Tile5_body">
+{% block content %}
+<a class="twitter-timeline" data-width="320" data-height="200" href="https://twitter.com/cityofballarat">Tweets by cityofballarat</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+ {{ tile.data.Raccoon }}
+{% endblock content %}
+</div>

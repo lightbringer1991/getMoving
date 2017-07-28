@@ -1,0 +1,83 @@
+{% extends "basetile.html" %}
+
+{% block category%}City Development{% endblock category%}
+
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     #mapc {
+
+        min-width: 315px;
+        width: inherit !important;
+        min-height: 200px;
+        height: inherit !important;
+     }
+    </style>0'[p]
+    <script>
+      var map;
+      var fullScreen = function () {
+          google.maps.event.trigger(map, 'resize');
+      }
+
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('mapc'), {
+          zoom: 11,
+          updateSize: fullScreen,
+          center: new google.maps.LatLng(-37.5555,143.851709),
+          mapTypeId: 'terrain'
+        });
+
+        var script = document.createElement('script');
+        script.src = '/cityDevelopment/';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.eqfeed_callback = function(results) {
+
+
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
+
+
+
+          var contentString = results.features[i].properties.Description;
+
+
+
+          var infowindow = new google.maps.InfoWindow({
+            maxWidth: 140,
+            maxHeight: 50
+          });
+
+
+          var marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            info: contentString,
+            title: results.features[i].properties.Location
+          });
+
+
+          marker.addListener('click', function() {
+            infowindow.setContent(this.info);
+            infowindow.open(map, this);
+          });
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mapc"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=initialize">
+    </script>
+  </body>
+</html>
+{% endblock content %}

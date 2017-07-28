@@ -1,0 +1,19 @@
+{% extends "basetile.html" %}
+
+<style>
+    .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+</style>
+{% block category%}Ballarat Reservoir Level{% endblock category%}
+{% block content %}
+{% load staticfiles %}
+<script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+<script src="{% static 'dash/js/liquidFillGauge.js' %}"></script>
+<svg id="fillgauge2" width="100%" height="180" ></svg>
+
+<script language="JavaScript">
+    var config1 = liquidFillGaugeDefaultSettings();
+    config1.waveAnimateTime = 2000;
+    var gauge2= loadLiquidFillGauge("fillgauge2", 77, config1);
+</script>
+
+{% endblock content %}

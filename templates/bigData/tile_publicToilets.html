@@ -1,0 +1,81 @@
+{% extends "basetile.html" %}
+
+{% block category%}
+
+{{ tile.title }}
+  
+{% endblock category%}
+
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     #map2 {
+        width: 315px;
+        height: 200px;
+     }
+    </style>
+    <script>
+      var map2;
+
+      function initializedpt() {
+        map2 = new google.maps.Map(document.getElementById('map2'), {
+          zoom: 11,
+          center: new google.maps.LatLng(-37.5515,143.851709),
+          mapTypeId: 'terrain'
+        });
+
+        // Create a <script> tag and set the USGS URL as the source.
+        var script = document.createElement('script');
+        script.src = '/publicToilets/';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.ptfeed_callback = function(results) {
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[1],coords[0]);
+
+          var contentString2 = results.features[i].properties.location+"<br>"
+                              +"<b>Disabled Toilet : "+ results.features[i].properties.dda_access+"</b>";
+            
+            
+          var infowindow = new google.maps.InfoWindow({
+            maxWidth: 140,
+            maxHeight: 50
+          });
+          
+
+          var marker2 = new google.maps.Marker({
+            position: latLng,
+            map: map2,
+            info: contentString2,
+            title: results.features[i].properties.site
+          });
+
+                 
+          marker2.addListener('click', function() {
+            infowindow.setContent(this.info);
+            infowindow.open(map2, this);
+          });
+          
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map2"></div>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?&callback=initializedpt">
+    </script>
+
+  </body>
+</html>
+
+{% endblock content %}

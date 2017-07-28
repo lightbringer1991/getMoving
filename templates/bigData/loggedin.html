@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Development Server Demo</title>
+<link rel="stylesheet" type="text/css" href="{% static 'dash/serverDemoStyle.css' %}" />
+
+<body>
+
+<div id="header_bar"></div>
+<div id="page_title"><h1>Online Development Server Demo</h1></div>
+
+<div id="top_row">
+
+	<h2>Register</h2>	
+
+</head>
+{% block content %}
+	<h2> hi {{full_name}}</h2>
+{% endblock %}
+</body>
+</html>

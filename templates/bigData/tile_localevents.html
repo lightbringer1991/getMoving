@@ -1,0 +1,84 @@
+{% extends "basetile.html" %}
+{% block category %}{{ tile.title }}{% endblock category %}
+{% block content %}
+{% load staticfiles %}
+<link href="{% static 'dash/css/zabuto_calendar.min.css' %}" rel="stylesheet" type="text/css">
+<script src="{% static 'dash/js/zabuto_calendar.min.js' %}"></script>
+<div id="date-popover" class="popover top">
+    <div id="date-popover-content" class="popover-content"></div>
+</div>
+<div id="my-calendar"></div>
+
+<script type="application/javascript">
+
+  var eventData = [
+
+      {"date":"2016-08-01","badge":false,"title":"Example 1"},
+      {"date":"2016-08-02","badge":true,"title":"Example 2"}
+  ];
+
+  var eventstart = ""
+  var eventstarts = ""
+  var calevent = {}
+
+  {% for tile_data in tile_data_list %}
+    {% if tile_data.name = "Local Events"%}
+      {% for item in tile_data.data.events%}
+        eventstart = "{{item.event_start}}";
+        eventstarts = eventstart.split(" ",1);
+        var eventstartss = eventstarts[0].split("/");
+        var ndatestr = eventstartss[2] + "-" + String("00" + eventstartss[0]).slice(-2) + "-" + String("00" + eventstartss[1]).slice(-2);
+
+        //("" + eventstarts).replace(/\//g, "-");
+        //str1 = '"date": ';
+        //str2 = ',"badge":true,"title":"{{item.event_name}}","body":"<p>{{event_description}}</p>"';
+        //calevent = {str1.concat(eventstarts,str2)};
+        calevent = {
+          date:ndatestr,
+          badge:true,
+          title:"{{item.event_name}}",
+          body:"<p>{{event_description}}</p>"
+        }
+        eventData.push(calevent);
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  for (i = 0; i < eventData.length; i++){
+  }
+
+  $("#my-calendar").zabuto_calendar({
+    action: function () {
+                return myDateFunction(this.id, false);
+            },
+            action_nav: function () {
+                return myNavFunction(this.id);
+            },
+    data: eventData,
+    show_previous: false
+  });
+
+
+  function myDateFunction(id, fromModal) {
+    $("#date-popover").hide();
+    if (fromModal) {
+        $("#" + id + "_modal").modal("hide");
+    }
+    var date = $("#" + id).data("date");
+    var hasEvent = $("#" + id).data("hasEvent");
+    if (hasEvent && !fromModal) {
+        return false;
+    }
+    $("#date-popover-content").html('You clicked on date ' + date + hasEvent);
+    $("#date-popover").show();
+    return true;
+}
+
+function myNavFunction(id) {
+    $("#date-popover").hide();
+    var nav = $("#" + id).data("navigation");
+    var to = $("#" + id).data("to");
+}
+
+</script>
+{% endblock content %}
