@@ -37,12 +37,14 @@ gulp.task('js', function() {
     var coffeeUtilsStream = gulp.src('./bigData/static/coffee/utils.coffee')
         .pipe(coffee({bare: true}))
         .pipe(concat('coffee-utils.js'));
-    var jqueryStream = gulp.src('./node_modules/jquery/dist/jquery.min.js')
-        .pipe(concat('jquery.js'));
+    var prequisiteStream = gulp.src([
+        './node_modules/jquery/dist/jquery.min.js',
+        './node_modules/async/dist/async.min.js'
+    ]).pipe(concat('prequisite.js'));
 
-    merge(jqueryStream, coffeeUtilsStream)
+    merge(prequisiteStream, coffeeUtilsStream)
         .pipe(order([
-            'jquery.js',
+            'prequisite.js',
             'coffee-utils.js'
         ]))
         .pipe(concat('prequisite.min.js'))

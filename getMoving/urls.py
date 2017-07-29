@@ -32,4 +32,6 @@ urlpatterns = [
 	url(r'^invalid/$', views.invalid_login),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^getTile/', views.get_tile),
+    url(r'^getPostcode/', views.get_postcode),
+    url(r'^getTemplate/', views.get_template),
 ]

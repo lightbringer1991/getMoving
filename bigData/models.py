@@ -17,6 +17,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Tile(models.Model):
     title = models.CharField(max_length=24)
     category = models.ForeignKey(Category, default=1, on_delete=models.SET_DEFAULT)
@@ -109,9 +110,24 @@ class Tile_Data(models.Model):
         else:
             return None
 
+
 class Tile_tileData(models.Model):
     tileId = models.ForeignKey('Tile')
     dataId = models.ForeignKey('Tile_Data')
+
+
+class Postcode(models.Model):
+    class Meta:
+        db_table = 'bigData_postcodes'
+
+    postcode = models.IntegerField()
+    suburb = models.CharField(max_length=100)
+    state = models.CharField(max_length=20)
+    description = models.CharField(max_length=255)
+    type = models.CharField(max_length=100)
+    latitude = models.CharField(max_length=10)
+    longitude = models.CharField(max_length=10)
+
 
 
 

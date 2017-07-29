@@ -42,7 +42,17 @@
     $.utilities.initializeLobiPanel()
 
     setTimeout ->
-      $.utilities.addTile [3050, 3047], 'emergency'
-      $.utilities.addTile [3050, 3047], 'insurance_health'
+      $.utilities.getTileData [3050, 3047], 'emergency', (err, htmlCode) -> $.utilities.addTile htmlCode
+
+      async.parallel
+        3350: (cb) -> $.utilities.getNumberOfParks 3350, cb
+        3353: (cb) -> $.utilities.getNumberOfParks 3353, cb
+      , (err, data) ->
+          $.utilities.renderTile 'tile_parks', parkCount: data
     , 1000
+
+    setTimeout ->
+      $.utilities.getTileData [3050, 3047], 'insurance_health', (err, htmlCode) -> $.utilities.addTile htmlCode
+    , 2000
+
 ) jQuery

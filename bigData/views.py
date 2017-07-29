@@ -3,10 +3,12 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
-from .models import Tile, Tile_Data, Category
+from .models import Tile, Tile_Data, Category, Postcode
+from django.core.serializers import serialize
 from django.core.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 
 import json
 
@@ -128,7 +130,7 @@ def ajax_return(request):
 
 def get_tile(request):
     if request.method == 'GET':
-        print(request.GET.getlist('postCodes[]'))
+        data = Postcode.objects.filter(postcode__in=request.GET.getlist('postCodes[]'))
         tileType = request.GET.get('type')
         # return HttpResponse('<span>test tile content</span>', status=201)
         return render_to_response("tile_" + tileType + ".html", {
@@ -145,5 +147,28 @@ def get_tile(request):
             }],
             'category': request.GET.getlist('type'),
         });
+    else:
+        return HttpResponse(status=405)
+
+
+def get_postcode(request):
+    if request.method == 'GET':
+        postcode = Postcode.objects.filter(postcode=request.GET.get('code'))[0]
+        return HttpResponse(serialize('json', [postcode], fields=('postcode', 'latitude', 'longitude')), status=201)
+    else:
+        return HttpResponse(status=405)
+
+
+@csrf_exempt
+def get_template(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+
+        template_name = data['templateName']
+        print(request.GET.iteritems())
+        for key, value in request.GET.iteritems():
+            print(value)
+        return render_to_response(template_name + ".html", {'data': data['data']})
     else:
         return HttpResponse(status=405)

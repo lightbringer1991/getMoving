@@ -1,0 +1,44 @@
+{% extends "base_tile.html" %}
+{% load bigData_filters %}
+
+{% block tileClass %}parks{% endblock tileClass%}
+
+{% block category %}Parks{% endblock category %}
+
+{% block content %}
+<script>
+    $(function () {
+        $.utilities.makeChart ('.parks .graph', {
+            chart: {
+                type: 'column'
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: 'Parks count comparison between {{ data.parkCount.keys|listify }}'
+            },
+            xAxis: {
+                categories: {{ data.parkCount.keys|to_js_array }}
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of parks'
+                },
+                allowDecimals: false
+            },
+            series: [
+                {
+                    name: 'Parks',
+                    data: {{ data.parkCount.values|to_js_array }}
+                },
+            ]
+        });
+    });
+
+</script>
+
+<div class="graph"></div>
+
+{% endblock content %}
+
