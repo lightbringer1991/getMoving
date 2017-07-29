@@ -94,7 +94,6 @@ DATABASES = {
         'PASSWORD': 'dr0wssaP',
     }
 }
-"""
 
 DATABASES = {
     'default': {
@@ -102,11 +101,21 @@ DATABASES = {
         'NAME': 'django',
         'USER': 'django',
         'PASSWORD': 'esCMsoQ00d',
-        'HOST': '107.170.233.8',
+        'HOST': '45.76.115.210',
         'PORT': '5432',
     }
 }
-
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'getmoving',
+        'USER': 'getmoving',
+        'PASSWORD': '7giug87y+s',
+        'HOST': '45.76.115.210',
+        'PORT': '5432',
+    }
+}
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
