@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from dash import views
+from bigData import views
 
 urlpatterns = [
     # Examples:
