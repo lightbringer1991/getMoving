@@ -22,16 +22,33 @@ gulp.task('css', function() {
 });
 
 gulp.task('js', function() {
-    var coffeeStream = gulp.src('./bigData/static/coffee/*.coffee')
+    var coffeeUtilsStream = gulp.src('./bigData/static/coffee/utils.coffee')
+        .pipe(coffee({bare: true}))
+        .pipe(concat('coffee-utils.js'));
+    var jqueryStream = gulp.src('./node_modules/jquery/dist/jquery.min.js')
+        .pipe(concat('jquery.js'));
+
+    merge(jqueryStream, coffeeUtilsStream)
+        .pipe(order([
+            'jquery.js',
+            'coffee-utils.js'
+        ]))
+        .pipe(concat('prequisite.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(distPath + '/js'));
+
+
+    var coffeeStream = gulp.src('./bigData/static/coffee/app.coffee')
         .pipe(coffee({bare: true}))
         .pipe(concat('coffee-files.js'));
 
     var jsStream = gulp.src([
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/jquery-ui/build/release.js',
+        'bigData/static/js/jquery-ui.js',
         customSourcePath + '/js/jquery.ui.touch-punch.js',
         customSourcePath + '/js/lobipanel.js',
-        customSourcePath + '/js/faqOverlay.js'
+        customSourcePath + '/js/faqOverlay.js',
+        './node_modules/highcharts/highcharts.js'
     ]).pipe(concat('js-files.js'));
 
     merge(jsStream, coffeeStream)
@@ -40,11 +57,6 @@ gulp.task('js', function() {
             'coffee-files.js'
         ]))
         .pipe(concat('app.min.js'))
-        // .pipe(uglify())
-        .pipe(gulp.dest(distPath + '/js'));
-
-    gulp.src('./node_modules/jquery/dist/jquery.min.js')
-        .pipe(concat('jquery.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(distPath + '/js'));
 });

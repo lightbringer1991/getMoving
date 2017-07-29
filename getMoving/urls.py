@@ -31,5 +31,5 @@ urlpatterns = [
 	url(r'^logout/$', views.logout_view),
 	url(r'^invalid/$', views.invalid_login),
     url(r'^admin/', include(admin.site.urls)),
-
+    url(r'^getTile/', views.get_tile),
 ]

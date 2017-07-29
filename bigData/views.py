@@ -124,3 +124,12 @@ def ajax_return(request):
         tile = Tile.objects.get(id=requested_tile)
         tile_data_list = Tile_Data.objects.filter(tile_tiledata__tileId=requested_tile)
         return render_to_response("ajax_request.html", {'tile': tile, 'tile_data_list': tile_data_list})
+
+
+def get_tile(request):
+    if request.method == 'GET':
+        print(request.GET.getlist('postCodes[]'))
+        print(request.GET.getlist('type'))
+        return HttpResponse('<span>test tile content</span>', status=201)
+    else:
+        return HttpResponse(status=405)
