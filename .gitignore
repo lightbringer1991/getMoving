@@ -1,0 +1,7 @@
+__MACOSX/
+bigData/static/dist/
+!bigData/static/dist/.gitkeep
+node_modules/
+.idea/
+*.pyc
+*.pyd
