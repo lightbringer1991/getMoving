@@ -129,7 +129,21 @@ def ajax_return(request):
 def get_tile(request):
     if request.method == 'GET':
         print(request.GET.getlist('postCodes[]'))
-        print(request.GET.getlist('type'))
-        return HttpResponse('<span>test tile content</span>', status=201)
+        tileType = request.GET.get('type')
+        # return HttpResponse('<span>test tile content</span>', status=201)
+        return render_to_response("tile_" + tileType + ".html", {
+            'tile_data_list': [{
+                'name': 'Emergency Alerts',
+                'data': [{
+                    'link': 'test link',
+                    'location': 'test location',
+                    'type': 'test type',
+                    'size': 'test size',
+                    'status': 'test status',
+                    'title': 'test title',
+                }]
+            }],
+            'category': request.GET.getlist('type'),
+        });
     else:
         return HttpResponse(status=405)

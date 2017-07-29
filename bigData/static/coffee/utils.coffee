@@ -5,7 +5,7 @@
 
 
     initializeLobiPanel: ->
-      $('#lobipanel-multiple').find('.panel').lobiPanel
+      $('#lobipanel-multiple').find('.tile .panel').lobiPanel
         sortable: true
         reload: false
         editTitle: false
@@ -22,7 +22,8 @@
         success: (htmlCode) =>
           newTile = $ htmlCode
           $('#first_col').prepend newTile
-          @initializeLobiPanel()
+
+          $ => @initializeLobiPanel()
 
 
   $.utilities = new Utilities()

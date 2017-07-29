@@ -38,5 +38,11 @@
       data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
     ]
 
-  $.utilities.addTile [3050, 3047], 'average_salary'
+  $ ->
+    $.utilities.initializeLobiPanel()
+
+    setTimeout ->
+      $.utilities.addTile [3050, 3047], 'emergency'
+      $.utilities.addTile [3050, 3047], 'insurance_health'
+    , 1000
 ) jQuery

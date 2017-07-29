@@ -1,0 +1,62 @@
+.tile {
+  &.emergency {
+    /* Override Boostrap carousel slider to fade instead */
+    .carousel {
+      &.fade {
+        opacity: 1;
+        display: inline;
+
+        .item {
+          transition: opacity ease-out .7s;
+          left: 0;
+          opacity: 0; /* hide all slides */
+          top: 0;
+          position: absolute;
+          width: 100%;
+          display: block;
+
+          &:first-child {
+            top: auto;
+            opacity: 0; /* show first slide */
+            position: relative;
+          }
+
+          &.active {
+            opacity: 1;
+          }
+        }
+      }
+
+      .carousel-control {
+        visibility: hidden;
+
+        /* Override Bootstrap styling to remove background gradient from left/right controls */
+        &.left,
+        &.right {
+          background: none !important;
+          outline: 0;
+          color:#88a7d8;
+        }
+      }
+
+      &:hover .carousel-control {
+        visibility: hidden;
+      }
+    }
+
+    #carouselButtons {
+      text-align: center;
+      margin: 0 auto;
+      width: 90%;
+      position: absolute;
+      bottom: 10px;
+    }
+  }
+
+  &.insurance-health {
+    .graph {
+      width: 100%;
+      height: auto;
+    }
+  }
+}

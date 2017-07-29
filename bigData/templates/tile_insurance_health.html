@@ -1,0 +1,52 @@
+{% extends "base_tile.html" %}
+
+{% block tileClass %}insurance-health{% endblock tileClass%}
+
+{% block category %}CFA Incidents {% now "d/m/y H:i" %}{% endblock category %}
+
+{% block content %}
+<script>
+    $(function () {
+        var chart = $.utilities.makeChart('.insurance-health .graph', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Fruit Consumption'
+            },
+            xAxis: {
+                categories: ['Apples', 'Bananas', 'Oranges']
+            },
+            yAxis: {
+                title: {
+                    text: 'Fruit eaten'
+                }
+            },
+            series: [
+                {
+                    name: 'Jane',
+                    data: [1, 0, 4]
+                },
+                {
+                    name: 'John',
+                    data: [5, 7, 3]
+                }
+            ],
+        });
+
+        $('.insurance-health').on('resize', function(ev) {
+            console.log('trigger');
+            chart.redraw();
+        });
+        $('.insurance-health').on('beforeMaximize.lobiPanel', function(ev, lobiPanel) {
+            console.log('trigger');
+            chart.redraw();
+        });
+    });
+
+</script>
+
+<div class="graph"></div>
+
+{% endblock content %}
+
